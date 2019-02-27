@@ -1,7 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import "./style.css"
-import TodoItem from "./TodoItem"
+// import TodoItem from "./TodoItem"
 
+
+function TodoItem(props){
+    return (
+        <div 
+            onClick={props.handlerItemClick}
+            >
+            {props.content}
+            </div>
+    )
+}
 class TodoList extends Component {
     constructor(props) {
         super(props);
@@ -19,45 +29,50 @@ class TodoList extends Component {
                         id="inputarea"
                         value={this.state.inputValue}
                         className='input'
-                        onChange={this.handleInputChange.bind(this)} />
-                    <button onClick={this.handleButtonClick.bind(this)}>提交</button>
+                        onChange={(e) => this.handleInputChange(e)} />
+                    <button onClick={() => this.handleButtonClick()}>提交</button>
                 </div>
                 <ul>
-                    {
-                        this.state.list.map((item, index) => {
-                            return (
-                                    <TodoItem
-                                        content={item}
-                                        index={index}
-                                        handlerItemClick={() => this.handlerItemClick(index)}
-                                    />
-                            )
-
-                        })
-                    }
+                    {this.getItem()}
                 </ul>
             </Fragment>
         )
     }
+    getItem() {
+        return this.state.list.map((item, index) => {
+            return (
+                <TodoItem
+                    content={item}
+                    index={index}
+                    handlerItemClick={() => this.handlerItemClick(index)}
+                />
+            )
+        })
+    }
     handleInputChange(e) {
-        this.setState({
-            inputValue: e.target.value,
+        let value = e.target.value;
+        this.setState(() => {
+            return {
+                inputValue: value
+            }
         })
     }
     handleButtonClick() {
-        this.setState(
-            {
-                list: [...this.state.list, this.state.inputValue],
+        this.setState((prev) => {
+            return {
+                list: [...prev.list, prev.inputValue],
                 inputValue: ""
             }
-        )
+        })
     }
     handlerItemClick(index) {
-        const list = this.state.list.slice();
-        list.splice(index, 1);
         this.setState(
-            {
-                list: list
+            (prev) => {
+                let list = this.state.list.slice();
+                list.splice(index, 1)
+                return {
+                    list: list
+                }
             }
         )
     }
