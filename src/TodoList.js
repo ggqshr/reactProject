@@ -1,23 +1,23 @@
 import React, { Component, Fragment } from 'react'
 import "./style.css"
-// import TodoItem from "./TodoItem"
+import TodoItem from "./TodoItem"
 
 
-function TodoItem(props){
-    return (
-        <div 
-            onClick={props.handlerItemClick}
-            >
-            {props.content}
-            </div>
-    )
-}
+// function TodoItem(props){
+//     return (
+//         <div 
+//             onClick={props.handlerItemClick}
+//             >
+//             {props.content}
+//             </div>
+//     )
+// }
 class TodoList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             inputValue: "",
-            list: ["学习"],
+            list: [],
         }
     }
     render() {
