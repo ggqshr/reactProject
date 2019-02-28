@@ -1,125 +1,29 @@
-import React, { Component, Fragment } from 'react'
-import "./style.css"
-import TodoItem from "./TodoItem"
-import axios from 'axios'
+import React, { Component } from 'react'
+import "antd/dist/antd.css"
+import { Input, Button, List } from 'antd';
 
-
-
-// function TodoItem(props){
-//     return (
-//         <div 
-//             onClick={props.handlerItemClick}
-//             >
-//             {props.content}
-//             </div>
-//     )
-// }
-
-class TodoList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputValue: "",
-            list: [],
-        }
-    }
-    //挂载时页面第一个被挂载的时候执行
-    //在组件将要被挂载时调用
-    componentWillMount() {
-        console.log("componentWillMount");
-    }
-
-    //页面挂载hi走执行
-    //用来放ajax的请求
-    componentDidMount() {
-        axios.get("/api/todolist").then(()=>{alert("success")}).catch(()=>{alert("error")})
-    }
-
-    //组建被更新之前，会被自动调用
-    //用来控制是否更新
-    shouldComponentUpdate() {
-        console.log("shouldComponentUpdate");
-        return true;
-    }
-
-    //如果shouldComponentUpdate返回true才会执行
-    componentWillUpdate() {
-        console.log("componentWillUpdate");
-    }
-
-    //更新之后会执行
-    componentDidUpdate() {
-        console.log("componentDidUpdate");
-    }
-    //在更新props时执行
-    componentWillReceiveProps() {
-
-    }
-    render() {
-        return (
-            <Fragment>
-                <div>
-                    <label htmlFor="inputarea">输入内容</label>
-                    <input
-                        id="inputarea"
-                        value={this.state.inputValue}
-                        className='input'
-                        onChange={(e) => this.handleInputChange(e)}
-                        ref={(input) => { this.input = input }}
-                    />
-                    <button onClick={() => this.handleButtonClick()}>提交</button>
-                </div>
-                <ul >
-                    {this.getItem()}
-                </ul>
-            </Fragment>
-        )
-    }
-    getItem() {
-        return this.state.list.map((item, index) => {
-            return (
-                <TodoItem
-                    content={item}
-                    index={index}
-                    handlerItemClick={() => this.handlerItemClick(index)}
-                />
-            )
-        })
-    }
-    handleInputChange(e) {
-
-        //使用e.target的当时获取节点
-        // let value = e.target.value;
-        let value = this.input.value
-        this.setState(() => {
-            return {
-                inputValue: value
-            }
-        })
-    }
-    handleButtonClick() {
-        // setState是一个异步函数,第一个函数可以更新statue，第二个函数是一个回调函数，在执行完更新之后，可以回调一个函数
-        this.setState((prev) => {
-            return {
-                list: [...prev.list, prev.inputValue],
-                inputValue: ""
-            }
-        },
-            // () => {
-            //     console.log(this.ul.querySelectorAll('div').length)
-            // }
-        )
-    }
-    handlerItemClick(index) {
-        this.setState(
-            (prev) => {
-                let list = this.state.list.slice();
-                list.splice(index, 1)
-                return {
-                    list: list
-                }
-            }
-        )
-    }
+const data = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.',
+];
+export default class TodoList extends Component {
+  render() {
+    return (
+      <div style={{ marginTop: '10px', marginLeft: '10px' }}>
+        <div>
+          <Input placeholder="todo info" style={{ width: '300px', marginRight: '10px' }} />
+          <Button type='primary'>提交</Button>
+        </div>
+        <List
+          style={{marginTop:'10px',width:'300px'}}
+          bordered
+          dataSource={data}
+          renderItem={item => (<List.Item>{item}</List.Item>)}
+        />
+      </div>
+    )
+  }
 }
-export default TodoList
