@@ -1,3 +1,37 @@
 .input{
     border: 1px solid red;
 }
+.show {
+    animation: show_item 2s ease-in forwards;
+}
+.hide{
+    animation: hide_item 2s ease-in forwards;
+}
+@keyframes hide_item{
+    0% {
+        opacity: 1;
+        color: red;
+    }
+    50% {
+        opacity: 0.5;
+        color:green;
+    }
+    100% {
+        opacity: 0;
+        color: blue
+    }
+}
+@keyframes show_item{
+    0% {
+        opacity: 0;
+        color: red;
+    }
+    50% {
+        opacity: 0.5;
+        color:green;
+    }
+    100% {
+        opacity: 1;
+        color: blue
+    }
+}
