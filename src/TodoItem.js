@@ -8,13 +8,28 @@ class TodoItem extends Component {
     componentWillReceiveProps(){
         
     }
+
+    //当组件即将被从页面中剔除时会执行
+    componentWillUnmount(){
+        console.log("componentWillUnmount");
+    }
+
+    shouldComponentUpdate(nextP,nextS){
+        if(nextP.content !== this.props.content){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     render(){
         const {content,test} = this.props;
         return(
             <div 
             onClick={this.props.handlerItemClick}
             >
-            {test}--{content}
+            {content}
             </div>
         )
     }

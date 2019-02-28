@@ -50,7 +50,7 @@ class TodoList extends Component {
     }
     //在更新props时执行
     componentWillReceiveProps(){
-        
+
     }
     render() {
         return (
@@ -66,7 +66,7 @@ class TodoList extends Component {
                     />
                     <button onClick={() => this.handleButtonClick()}>提交</button>
                 </div>
-                <ul ref={(ul) => { this.ul = ul }}>
+                <ul >
                     {this.getItem()}
                 </ul>
             </Fragment>
@@ -102,9 +102,9 @@ class TodoList extends Component {
                 inputValue: ""
             }
         },
-            () => {
-                console.log(this.ul.querySelectorAll('div').length)
-            }
+            // () => {
+            //     console.log(this.ul.querySelectorAll('div').length)
+            // }
         )
     }
     handlerItemClick(index) {
