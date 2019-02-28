@@ -43,10 +43,14 @@ class TodoList extends Component {
     componentWillUpdate() {
         console.log("componentWillUpdate");
     }
-    
+
     //更新之后会执行
     componentDidUpdate() {
         console.log("componentDidUpdate");
+    }
+    //在更新props时执行
+    componentWillReceiveProps(){
+        
     }
     render() {
         return (
