@@ -22,7 +22,7 @@ export default class TodoList extends Component {
           style={{ marginTop: '10px', width: '300px' }}
           bordered
           dataSource={this.state.list}
-          renderItem={item => (<List.Item>{item}</List.Item>)}
+          renderItem={(item,index) => (<List.Item onClick={()=>this.handleDelete(index)}>{item}</List.Item>)}
         />
       </div>
     )
@@ -43,5 +43,12 @@ export default class TodoList extends Component {
       type:"add_todo_item",
     }
     store.dispatch(action)
+  }
+  handleDelete(index){
+      let action = {
+        type:'delete_todo_item',
+        index:index
+      }
+      store.dispatch(action)
   }
 }
