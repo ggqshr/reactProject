@@ -21,6 +21,33 @@ class TodoList extends Component {
             list: [],
         }
     }
+    //挂载时页面第一个被挂载的时候执行
+    //在组件将要被挂载时调用
+    componentWillMount() {
+        console.log("componentWillMount");
+    }
+
+    //页面挂载hi走执行
+    componentDidMount() {
+        console.log("componentDidMount");
+    }
+
+    //组建被更新之前，会被自动调用
+    //用来控制是否更新
+    shouldComponentUpdate() {
+        console.log("shouldComponentUpdate");
+        return true;
+    }
+
+    //如果shouldComponentUpdate返回true才会执行
+    componentWillUpdate() {
+        console.log("componentWillUpdate");
+    }
+    
+    //更新之后会执行
+    componentDidUpdate() {
+        console.log("componentDidUpdate");
+    }
     render() {
         return (
             <Fragment>
@@ -31,11 +58,11 @@ class TodoList extends Component {
                         value={this.state.inputValue}
                         className='input'
                         onChange={(e) => this.handleInputChange(e)}
-                        ref={(input)=>{this.input = input}}
-                        />
+                        ref={(input) => { this.input = input }}
+                    />
                     <button onClick={() => this.handleButtonClick()}>提交</button>
                 </div>
-                <ul ref={(ul)=>{this.ul = ul}}>
+                <ul ref={(ul) => { this.ul = ul }}>
                     {this.getItem()}
                 </ul>
             </Fragment>
@@ -71,9 +98,9 @@ class TodoList extends Component {
                 inputValue: ""
             }
         },
-        ()=>{
-            console.log(this.ul.querySelectorAll('div').length)
-        }
+            () => {
+                console.log(this.ul.querySelectorAll('div').length)
+            }
         )
     }
     handlerItemClick(index) {
