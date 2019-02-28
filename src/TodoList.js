@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import "./style.css"
 import TodoItem from "./TodoItem"
+import axios from 'axios'
+
 
 
 // function TodoItem(props){
@@ -28,8 +30,9 @@ class TodoList extends Component {
     }
 
     //页面挂载hi走执行
+    //用来放ajax的请求
     componentDidMount() {
-        console.log("componentDidMount");
+        axios.get("/api/todolist").then(()=>{alert("success")}).catch(()=>{alert("error")})
     }
 
     //组建被更新之前，会被自动调用
@@ -49,7 +52,7 @@ class TodoList extends Component {
         console.log("componentDidUpdate");
     }
     //在更新props时执行
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
 
     }
     render() {
