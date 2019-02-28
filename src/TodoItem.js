@@ -3,6 +3,8 @@ import { PropTypes } from "prop-types";
 
 class TodoItem extends Component {
     //当一个组件从另一个组件接受参数，只要父组件的render的函数被重新执行了，他才会被执行
+    //如果这个组件第一次存在于父组件中，不会执行
+    // 如果这个组件已经存在于父组件中，会被执行
     componentWillReceiveProps(){
         
     }
