@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import "antd/dist/antd.css"
 import store from './store'
-import { getInputChangeAction, getAddItemAction, getDeleteItemAction,getTodoItem } from './store/actionCreators'
+import { getInputChangeAction, getAddItemAction, getDeleteItemAction, getINitList } from './store/actionCreators'
 import TodoListUi from './TodoListUi'
-
 
 export default class TodoList extends Component {
   constructor() {
@@ -26,7 +25,14 @@ export default class TodoList extends Component {
   }
 
   componentDidMount = () => {
-    const action = getTodoItem();
+    //解决跨域
+    // axios.defaults.withCredentials = true
+    // axios.get('http://127.0.0.1:5000/list.json').then((res) => {
+    //   const data = res.data;
+    //   const action = initListAction(data)
+    //   store.dispatch(action)
+    // })
+    const action = getINitList()
     store.dispatch(action)
   }
 
