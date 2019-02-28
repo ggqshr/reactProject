@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Input, Button, List } from 'antd';
 //函数时组件就是无状态组件 没有状态，只负责显示
 const TodoListUi = (props)=>{
