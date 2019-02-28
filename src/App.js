@@ -1,22 +1,32 @@
 import React, { Component, Fragment } from 'react'
 import "./style.css";
-import { CSSTransition } from 'react-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 export default class App extends Component {
     constructor() {
         super();
         this.state = {
-            show: true,
+            list: []
         }
     }
     render() {
         return (
             <Fragment>
-                <CSSTransition in={this.state.show} timeout={1000} classNames='fade' unmountOnExit onEntered={(el)=>{el.style.color="red"}} appear={true}>
-                    <div >
-                        hello world
-                    </div>
-                </CSSTransition>
-                <button onClick={() => this.handleToggle()}>
+                <TransitionGroup >
+                    {
+
+                        this.state.list.map((item, index) => {
+                            return (
+                                <CSSTransition timeout={1000} classNames="fade" unmountOnExit appear={true} key={index}>
+                                    <div >
+                                        {item}
+                                    </div>
+                                </CSSTransition>
+                            )
+                        })
+
+                    }
+                </TransitionGroup>
+                <button onClick={() => this.handleAddItem()}>
                     toggle
                 </button>
             </Fragment>
@@ -30,5 +40,12 @@ export default class App extends Component {
                 }
             }
         )
+    }
+    handleAddItem() {
+        this.setState((prev) => {
+            return {
+                list: [...prev.list, 'item']
+            }
+        })
     }
 }
