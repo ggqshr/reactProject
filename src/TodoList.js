@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import "antd/dist/antd.css"
-import { Input, Button, List } from 'antd';
 import store from './store'
 import { getInputChangeAction, getAddItemAction, getDeleteItemAction } from './store/actionCreators'
+import TodoListUi from './TodoListUi'
+
 export default class TodoList extends Component {
   constructor() {
     super();
@@ -13,18 +14,13 @@ export default class TodoList extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: '10px', marginLeft: '10px' }}>
-        <div>
-          <Input placeholder="todo info" style={{ width: '300px', marginRight: '10px' }} value={this.state.inputValue} onChange={(e) => this.handleOnChange(e)} />
-          <Button type='primary' onClick={()=>this.handleClick()}>提交</Button>
-        </div>
-        <List
-          style={{ marginTop: '10px', width: '300px' }}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item,index) => (<List.Item onClick={()=>this.handleDelete(index)}>{item}</List.Item>)}
-        />
-      </div>
+      <TodoListUi
+        inputValue={this.state.inputValue}
+        handleOnChange={(e)=>this.handleOnChange(e)}
+        handleClick = {()=>this.handleClick()}
+        handleDelete={(index)=>this.handleDelete(index)}
+        list={this.state.list}
+      />
     )
   }
 
@@ -33,14 +29,14 @@ export default class TodoList extends Component {
     store.dispatch(action)
   }
   handlerStoreChange() {
-      this.setState(store.getState())
+    this.setState(store.getState())
   }
-  handleClick(){
+  handleClick() {
     const action = getAddItemAction()
     store.dispatch(action)
   }
-  handleDelete(index){
-      let action = getDeleteItemAction(index)
-      store.dispatch(action)
+  handleDelete(index) {
+    let action = getDeleteItemAction(index)
+    store.dispatch(action)
   }
 }
