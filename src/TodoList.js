@@ -1,49 +1,53 @@
 import React, { Component } from 'react'
-import "antd/dist/antd.css"
-import store from './store'
-import { getInputChangeAction, getAddItemAction, getDeleteItemAction,getTodoItem } from './store/actionCreators'
-import TodoListUi from './TodoListUi'
+import { connect } from 'react-redux'
+import { changeInputValueAction, addItemAction, deleteItemAction } from './store/actionCreater'
 
 
-export default class TodoList extends Component {
-  constructor() {
-    super();
-    console.log(store.getState())
-    this.state = store.getState();
-    store.subscribe(() => { this.handlerStoreChange() })
-  }
 
-  render() {
-    return (
-      <TodoListUi
-        inputValue={this.state.inputValue}
-        handleOnChange={(e) => this.handleOnChange(e)}
-        handleClick={() => this.handleClick()}
-        handleDelete={(index) => this.handleDelete(index)}
-        list={this.state.list}
-      />
-    )
-  }
-
-  componentDidMount = () => {
-    const action = getTodoItem();
-    store.dispatch(action)
-  }
-
-
-  handleOnChange(e) {
-    const action = getInputChangeAction(e.target.value)
-    store.dispatch(action)
-  }
-  handlerStoreChange() {
-    this.setState(store.getState())
-  }
-  handleClick() {
-    const action = getAddItemAction()
-    store.dispatch(action)
-  }
-  handleDelete(index) {
-    let action = getDeleteItemAction(index)
-    store.dispatch(action)
-  }
+class TodoList extends Component {
+    render() {
+        const { inputValue,ChangeInputvalue,handleClick,handleDelete } = this.props;
+        return (
+            <div>
+                <div>
+                    <input value={inputValue} onChange={ChangeInputvalue} />
+                    <button onClick={handleClick}>提交</button>
+                </div>
+                <ul>
+                    {
+                        this.props.list.map((item, index) => {
+                            return (
+                                <li key={index} onClick={()=>handleDelete(index)}>{item}</li>
+                            )
+                        })
+                    }
+                </ul>
+            </div>
+        )
+    }
 }
+//连接的规则
+const mapStateToProps = (state) => {
+    return {
+        inputValue: state.inputValue,
+        list: state.list
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        ChangeInputvalue(e) {
+            const action = changeInputValueAction(e.target.value)
+            dispatch(action)
+        },
+        handleClick() {
+            const action = addItemAction()
+            dispatch(action)
+        },
+        handleDelete(index){
+            const action = deleteItemAction(index)
+            dispatch(action)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
